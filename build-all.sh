@@ -1,9 +1,10 @@
 #!/bin/sh
 
 PWD="$(pwd)"
-FOLDER="$(dirname "$(realpath "$0")")"
+FOLDER="$PWD"
 
 source "$FOLDER/docker-vars.sh"
+source "$FOLDER/push-config.sh"
 
 DOCKERHUB_USER=""
 DOCKERHUB_TOKEN=""
@@ -68,13 +69,12 @@ fi
 
 
 RABBITMQ_FOLDER="$FOLDER/system-services-rabbitmq"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/rabbitmq | grep $CUSTOM_RABBITMQ_RELEASE)" ]]; then
-  echo "Creating Custom RabbitMQ v. $RABBITMQ_RELEASE-flow-centric docker image"
-  cd $RABBITMQ_FOLDER
-  sh ./create-custom-rabbitmq-docker-image.sh
-  RES="$?"
-  cd $PWD
-  echo "Results: $RES"
+echo "Creating Custom RabbitMQ v. $RABBITMQ_RELEASE-flow-centric docker image"
+cd $RABBITMQ_FOLDER
+sh ./create-custom-rabbitmq-docker-image.sh
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_RABBITMQ" ]]; then
   if [[ "0" != "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/rabbitmq:$CUSTOM_RABBITMQ_RELEASE
   fi
@@ -103,19 +103,20 @@ cd "$PWD"
 #    mongo --host $(sh ./docker-machine-ip.sh):27017
 
 
-
 #############################
 #### C U S T O M   J D K ####
 #############################
 
 JDK_FOLDER="$FOLDER/system-infra-oracle-jdk-1.8"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/oracle-jdk8 | grep $JDK_VERSION)" ]]; then
-  echo "Creating Oracle JDK v. $JDK_VERSION Ubuntu docker image"
-  cd "$JDK_FOLDER"
-  if [[ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]]; then
-	curl -L https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/flow-centric/PoC/jdk-8u241-linux-x64.tar.gz -o $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz
-  fi
-  docker --debug image build --rm . -t $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
+echo "Creating Oracle JDK v. $JDK_VERSION Ubuntu docker image"
+cd "$JDK_FOLDER"
+if [[ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]]; then
+curl -L https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/flow-centric/PoC/jdk-8u241-linux-x64.tar.gz -o $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz
+fi
+docker --debug image build --rm . -t $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_JDK" ]]; then
   if [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
   fi
@@ -132,10 +133,12 @@ cd "$PWD"
 #########################################################
 
 H2D_FOLDER="$FOLDER/system-services-h2-database-server"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/h2-database | grep $H2_DATABASE_RELEASE)" ]]; then
 echo "Creating H2 Database v. $H2_DATABASE_RELEASE docker image"
-  cd "$H2D_FOLDER"
-  docker --debug image build --rm . -t $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
+cd "$H2D_FOLDER"
+docker --debug image build --rm . -t $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_H2D" ]]; then
   if [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
   fi
@@ -154,13 +157,13 @@ cd "$PWD"
 ###########################################################################
 
 CONFIG_SERVER_FOLDER="$FOLDER/spring-cloud-config-server"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/spring-cloud-config-server | grep $CONFIG_SERVER_RELEASE)" ]]; then
-  echo "Creating Spring Cloud Config Server for Flow Centric v. $CONFIG_SERVER_RELEASE docker image"
-  cd $CONFIG_SERVER_FOLDER
-  ./create-config-server-docker-image.sh
-  RES="$?"
+echo "Creating Spring Cloud Config Server for Flow Centric v. $CONFIG_SERVER_RELEASE docker image"
+cd $CONFIG_SERVER_FOLDER
+./create-config-server-docker-image.sh
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_CONFIG_SERVER" ]]; then
   cd $PWD
-  echo "Results: $RES"
   if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
   fi
@@ -172,19 +175,18 @@ fi
 cd "$PWD"
 
 
-
 ###################################################################################################
 #### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S O U R C E   S E R V I C E ####
 ###################################################################################################
 
 DATAFLOW_SOURCE_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-source"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/spring-cloud-dataflow-source-server | grep $SOURCE_SERVER_RELEASE)" ]]; then
-  echo "Creating Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
-  cd $DATAFLOW_SOURCE_SERVER_FOLDER
-  ./create-dataflow-source-server-docker-image.sh
-  RES="$?"
+echo "Creating Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
+cd $DATAFLOW_SOURCE_SERVER_FOLDER
+./create-dataflow-source-server-docker-image.sh
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_DATAFLOW_SOURCE_SERVER" ]]; then
   cd $PWD
-  echo "Results: $RES"
   if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/spring-cloud-dataflow-source-server:$SOURCE_SERVER_RELEASE
   fi
@@ -195,19 +197,18 @@ fi
 ## docker run -d --tty --rm -p 8996:8996 --name test-dataflow-source-server-2 hellgate75/spring-cloud-dataflow-source-server:1.0.0-flow-centric
 cd "$PWD"
 
-
 ########################################################################################################
 #### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   P R O C E S S O R  S E R V I C E ####
 ########################################################################################################
 
 DATAFLOW_PROCESS_SERVER_FOLDER="$FOLDER/processor-server"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/spring-cloud-dataflow-processor-server | grep $PROCESS_SERVER_RELEASE)" ]]; then
-  echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
-  cd $DATAFLOW_PROCESS_SERVER_FOLDER
-  ./create-dataflow-processor-server-docker-image.sh
-  RES="$?"
+echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
+cd $DATAFLOW_PROCESS_SERVER_FOLDER
+./create-dataflow-processor-server-docker-image.sh
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_DATAFLOW_PROCESS_SERVER" ]]; then
   cd $PWD
-  echo "Results: $RES"
   if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/spring-cloud-dataflow-processor-server:$PROCESS_SERVER_RELEASE
   fi
@@ -219,19 +220,18 @@ fi
 cd "$PWD"
 
 
-
 ###############################################################################################
 #### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S I N K   S E R V I C E ####
 ###############################################################################################
 
 DATAFLOW_SINK_SERVER_FOLDER="$FOLDER/sink-server"
-if [[ "" == "$(docker image ls | grep $DOCKERHUB_USER/spring-cloud-dataflow-sink-server | grep $SINK_SERVER_RELEASE)" ]]; then
-  echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
-  cd $DATAFLOW_SINK_SERVER_FOLDER
-  ./create-dataflow-sink-server-docker-image.sh
-  RES="$?"
+echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
+cd $DATAFLOW_SINK_SERVER_FOLDER
+./create-dataflow-sink-server-docker-image.sh
+RES="$?"
+echo "Results: $RES"
+if [[ "true" == "$PUSH_DATAFLOW_SINK_SERVER" ]]; then
   cd $PWD
-  echo "Results: $RES"
   if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
      docker push $DOCKERHUB_USER/spring-cloud-dataflow-sink-server:$SINK_SERVER_RELEASE
   fi
