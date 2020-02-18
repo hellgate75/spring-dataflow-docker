@@ -5,7 +5,6 @@ services:
   - docker
 
 before_install:
-- echo "Current folder: $(pwd)"
 - chmod 777 *.sh
 - ./pull-from-remote.sh
 
