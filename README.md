@@ -1,5 +1,5 @@
 <p align="center">
-<image width="120" height="90" src="images/flow-centric-poc-logo.png"></image>&nbsp;
+<image width="90" height="90" src="images/flow-centric-poc-logo.png"></image>&nbsp;
 <image width="550" height="350" src="images/spring-dataflow-logo.png">
 &nbsp;<image width="120" height="90" src="images/docker-logo.png"></image>
 </p><br/>
