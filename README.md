@@ -1,6 +1,6 @@
 <p align="center"><image width="350" height="350" src="images/spring-dataflow-logo.png">&nbsp;<image width="120" height="80" src="images/docker-logo.png"></image></p><br/>
 <br/>
-<p align="right"><img src="https://travis-ci.org/hellgate75/flow-centric-poc.svg?branch=master" alt="trevis-ci" width="98" height="20" />&nbsp;<a href="https://travis-ci.org/hellgate75/flow-centric-poc">Check last build on Travis-CI</a></p><br/>
+<p align="right"><img src="https://travis-ci.org/hellgate75/spring-dataflow-docker.svg?branch=flow-centric" alt="trevis-ci" width="98" height="20" />&nbsp;<a href="https://travis-ci.org/hellgate75/spring-dataflow-docker">Check last build on Travis-CI</a></p><br/>
 <br/>
 
 
