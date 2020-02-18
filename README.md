@@ -2,7 +2,8 @@
 <image width="90" height="90" src="images/flow-centric-poc-logo.png"></image>&nbsp;
 <image width="550" height="350" src="images/spring-dataflow-logo.png">
 &nbsp;<image width="120" height="90" src="images/docker-logo.png"></image>
-</p><br/>
+</p>
+<p align="center"><image width="288" height="119" src="images/flow-centric.png"></p><br/>
 <br/>
 <p align="right">
 <img src="https://travis-ci.org/hellgate75/spring-dataflow-docker.svg?branch=flow-centric" alt="trevis-ci" width="98" height="20" />
