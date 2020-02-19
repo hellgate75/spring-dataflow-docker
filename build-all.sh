@@ -5,6 +5,9 @@ FOLDER="$PWD"
 
 source "$FOLDER/docker-vars.sh"
 source "$FOLDER/push-config.sh"
+if [[ -e $FOLDER/push-dev-config.sh ]]; then
+	source "$FOLDER/push-dev-config.sh"
+fi
 
 DOCKERHUB_USER=""
 DOCKERHUB_TOKEN=""
@@ -171,75 +174,46 @@ else
 	echo "Spring Cloud Config Server for Flow Centric v. $CONFIG_SERVER_RELEASE docker image already present!!"
 fi
 ## run sample of Config Server custom container:
-## docker run -d --tty --rm -p 8888:8888 --name test-config-server-2 hellgate75/spring-cloud-config-server:1.0.0-flow-centric
+## docker run -d --tty --rm -p 8888:8888 --name test-config-server-2 -v /$(pwd)/sample-data:/opt/spring-cloud-group/dataflow-ms-config-server/config hellgate75/spring-cloud-config-server:1.0.0
 cd "$PWD"
 
 
-###################################################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S O U R C E   S E R V I C E ####
-###################################################################################################
+###############################################################################
+#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   S E R V E R ####
+###############################################################################
 
-DATAFLOW_SOURCE_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-source"
-echo "Creating Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
-cd $DATAFLOW_SOURCE_SERVER_FOLDER
-./create-dataflow-source-server-docker-image.sh
+DATAFLOW_SERVER_FOLDER="$FOLDER/spring-cloud-dataflow-server"
+echo "Creating Spring Cloud Dataflow Server for Flow Centric v. $DATAFLOW_SERVER_RELEASE docker image"
+cd $DATAFLOW_SERVER_FOLDER
+./create-dataflow-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_DATAFLOW_SOURCE_SERVER" ]]; then
+if [[ "true" == "$PUSH_DATAFLOW_SERVER" ]]; then
   cd $PWD
   if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
-     docker push $DOCKERHUB_USER/spring-cloud-dataflow-source-server:$SOURCE_SERVER_RELEASE
+     docker push $DOCKERHUB_USER/spring-cloud-dataflow-server:$DATAFLOW_SERVER_RELEASE
   fi
 else
 	echo "Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image already present!!"
 fi
 ## run sample of Dataflow Source Server custom container:
-## docker run -d --tty --rm -p 8996:8996 --name test-dataflow-source-server-2 hellgate75/spring-cloud-dataflow-source-server:1.0.0-flow-centric
-cd "$PWD"
-
-########################################################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   P R O C E S S O R  S E R V I C E ####
-########################################################################################################
-
-DATAFLOW_PROCESS_SERVER_FOLDER="$FOLDER/processor-server"
-echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
-cd $DATAFLOW_PROCESS_SERVER_FOLDER
-./create-dataflow-processor-server-docker-image.sh
+## docker run -d --tty --rm -p 8996:8996 --name test-dataflow-server-2 hellgate75/spring-cloud-dataflow-server:1.0.0
+./create-dataflow-live-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_DATAFLOW_PROCESS_SERVER" ]]; then
+if [[ "true" == "$PUSH_DATAFLOW_SERVER" ]]; then
   cd $PWD
   if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
-     docker push $DOCKERHUB_USER/spring-cloud-dataflow-processor-server:$PROCESS_SERVER_RELEASE
+     docker push $DOCKERHUB_USER/spring-cloud-dataflow-live-server:$DATAFLOW_SERVER_RELEASE
   fi
 else
-	echo "Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image already present!!"
+	echo "Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image already present!!"
 fi
 ## run sample of Dataflow Source Server custom container:
-## docker run -d --tty --rm -p 8997:8997 --name test-dataflow-processor-server-2 hellgate75/spring-cloud-dataflow-processor-server:1.0.0-flow-centric
-cd "$PWD"
+## docker run -d --tty --rm -p 8996:8996 --name test-dataflow-server-2 hellgate75/spring-cloud-dataflow-live-server:1.0.0
 
 
-###############################################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S I N K   S E R V I C E ####
-###############################################################################################
 
-DATAFLOW_SINK_SERVER_FOLDER="$FOLDER/sink-server"
-echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
-cd $DATAFLOW_SINK_SERVER_FOLDER
-./create-dataflow-sink-server-docker-image.sh
-RES="$?"
-echo "Results: $RES"
-if [[ "true" == "$PUSH_DATAFLOW_SINK_SERVER" ]]; then
-  cd $PWD
-  if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
-     docker push $DOCKERHUB_USER/spring-cloud-dataflow-sink-server:$SINK_SERVER_RELEASE
-  fi
-else
-	echo "Spring Cloud Dataflow Sink Server for Flow Centric v. $SINK_SERVER_RELEASE docker image already present!!"
-fi
-## run sample of Dataflow Source Server custom container:
-## docker run -d --tty --rm -p 8998:8998 --name test-dataflow-sink-server-2 hellgate75/spring-cloud-dataflow-sink-server:1.0.0-flow-centric
 cd "$PWD"
 
 

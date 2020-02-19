@@ -1,0 +1,42 @@
+server:
+  port: 8888
+  
+debug: false
+
+logging:
+  level:
+    org.springframework.cloud: 'INFO'
+health:
+  config:
+    enabled: false
+
+spring:
+  profiles:
+    active: git
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: https://github.com/hellgate75/dataflow-flow-centric-config
+          search-paths: dataflow-*, spring-cloud-*
+          clone-on-start: true
+          force-pull: true
+      bootstrap: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+dataflow:
+  app:
+    config:
+      server:
+        u: sa
+        p: sa
+        driverClassName: org.h2.Driver
+        dbUrl: jdbc:h2:mem:configdb
+        initialSize: 1
+        maxActive: 1
+        maxIdle: 1
+        minIdle: 1
+        appFolder: ../dataflow-config-server
+    

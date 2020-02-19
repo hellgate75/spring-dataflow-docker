@@ -1,0 +1,10 @@
+#!/bin/sh
+if [ "dataflow" == "$1" ]; then
+	echo "Starting Spring Cloud Skipper Shell ..."
+	/opt/spring-cloud-space/spring-cloud-skipper-shell/bin/start-shell.sh
+elif  [ "skipper" == "$1" ]; then
+	echo "Starting Spring Cloud Dataflow Shell ..."
+	/opt/spring-cloud-space/spring-cloud-dataflow-shell/bin/start-shell.sh
+else 
+	echo "Shell named: <$1> not knowm. Plese specify skipper or dataflow shell."
+fi

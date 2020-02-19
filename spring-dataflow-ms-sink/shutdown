@@ -1,3 +1,0 @@
-#!/bin/bash
-ps -eaf|grep tail|awk 'BEGIN {FS=OFS=" "}{print $2}'| xargs kill
-ps -eaf|grep -v grep|grep -v PID|awk 'BEGIN {FS=OFS=" "}{print $2}'| xargs kill -s 9

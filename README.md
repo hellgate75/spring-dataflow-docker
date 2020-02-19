@@ -1,11 +1,11 @@
 <p align="center">
-<image width="90" height="90" src="images/flow-centric-poc-logo.png"></image>&nbsp;
+<image width="120" height="90" src="images101-docker-logo.png"></image>&nbsp;
 <image width="550" height="350" src="images/spring-dataflow-logo.png">
 &nbsp;<image width="120" height="90" src="images/docker-logo.png"></image>
 </p><br/>
 <br/>
 <p align="right">
-<img src="https://travis-ci.org/hellgate75/spring-dataflow-docker.svg?branch=flow-centric" alt="trevis-ci" width="98" height="20" />
+<img src="https://travis-ci.org/hellgate75/spring-dataflow-docker.svg?branch=master" alt="trevis-ci" width="98" height="20" />
 &nbsp;<a href="https://travis-ci.org/hellgate75/spring-dataflow-docker">Check last build on Travis-CI</a></p><br/>
 <br/>
 
@@ -37,11 +37,7 @@ We prapared customized containers for following services:
 
 * Spring Cloud Config Server available [here](/spring-cloud-config-server)
 
-* Spring Cloud Dataflow Source Service available [here](/spring-dataflow-ms-source)
-
-* Spring Cloud Dataflow Processor Service available [here](/spring-dataflow-ms-processor)
-
-* Spring Cloud Dataflow Sink Service available [here](/spring-dataflow-ms-sink)
+* Spring Cloud Dataflow Server available [here](/spring-dataflow-server)
 
 
 
