@@ -1,6 +1,6 @@
 #!/bin/sh
-if [[ "" != "$(docker ps -a|grep test-h2-2)" ]]; then
-	if [[ "" != "$(docker ps -a|grep test-h2-2|grep Up)" ]]; then
+if [ "" != "$(docker ps -a|grep test-h2-2)" ]; then
+	if [ "" != "$(docker ps -a|grep test-h2-2|grep Up)" ]; then
 		docker stop test-h2-2
 	fi
 	docker rm -f test-h2-2

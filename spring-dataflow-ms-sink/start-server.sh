@@ -9,7 +9,7 @@ echo "APP ARGS: $ARGS"
 echo ""
 CMD="java $JVM_ARGS -jar /opt/$APP_GROUP/$APP_NAME/jar/$APP_NAME.jar $MAIN_CLASS $ARGS"
 BOOTSTRAP_LOG_FILE="/opt/$APP_GROUP/log/$APP_NAME.log"
-if [ "yes" == "$REDIRECT_OUTPUT_TO_APP" ]; then
+if [ "yes" = "$REDIRECT_OUTPUT_TO_APP" ]; then
 	BOOTSTRAP_LOG_FILE="/opt/$APP_GROUP/log/$APP_NAME/$APP_NAME-$LOG_LEVEL.log"
 	nohup execute.sh "$CMD" > $BOOTSTRAP_LOG_FILE 2>&1 &
 else
@@ -28,7 +28,7 @@ else
 fi
 echo ""
 echo "$APP_DESCR $LOG_LEVEL logs"
-echo "====================================================================="
+echo "==================================="
 echo "Log file: /opt/$APP_GROUP/log/$APP_NAME/$APP_NAME-$LOG_LEVEL.log"
 echo ""
 COUNTER=0

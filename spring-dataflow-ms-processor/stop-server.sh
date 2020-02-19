@@ -1,7 +1,7 @@
 #!/bin/bash
 source "$(which ms-env.sh)"
 echo "Stopping $APP_DESCR ..."
-echo "====================================================================="
+echo "==================================="
 echo ""
 if [ -e /var/run/$APP_GROUP/$APP_NAME.pid ]; then
 	PID="$(cat /var/run/$APP_GROUP/$APP_NAME.pid)"

@@ -1,9 +1,8 @@
 #!/bin/sh -e
-
-PUSH_RABBITMQ="false"
-PUSH_JDK="false"
-PUSH_H2D="false"
-PUSH_CONFIG_SERVER="false"
-PUSH_DATAFLOW_SOURCE_SERVER="false"
-PUSH_DATAFLOW_PROCESS_SERVER="false"
-PUSH_DATAFLOW_SINK_SERVER="false"
+export PUSH_RABBITMQ="false"
+export PUSH_JDK="false"
+export PUSH_H2D="false"
+export PUSH_CONFIG_SERVER="false"
+export PUSH_DATAFLOW_SOURCE_SERVER="false"
+export PUSH_DATAFLOW_PROCESS_SERVER="false"
+export PUSH_DATAFLOW_SINK_SERVER="false"
