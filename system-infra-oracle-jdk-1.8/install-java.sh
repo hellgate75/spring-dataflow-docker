@@ -153,7 +153,7 @@ if [ $jdk_dir =~ $java_78_dir_regex ]; then
     demos_dist=$(dirname $java_dist)"/"$(echo $java_dist_filename | sed 's/\.tar\.gz/-demos\0/')
 fi
 
-if [ -f $demos_dist && ! -d $extracted_dirname/demo ]; then
+if [ -f $demos_dist ] && [ ! -d $extracted_dirname/demo ]; then
     # No demo directory
     if (confirm "Extract demos?"); then
         echo "Extracting $demos_dist to $java_dir"
@@ -180,7 +180,7 @@ if [ -f $unlimited_jce_policy_dist ]; then
 fi
 
 # Run update-alternatives commands
-if (confirm "Run update-alternatives commands?"); then
+#if (confirm "Run update-alternatives commands?"); then
     echo "Running update-alternatives..."
     declare -a commands=($(ls -1 ${extracted_dirname}/bin))
     for command in "${commands[@]}"; do
@@ -196,7 +196,7 @@ if (confirm "Run update-alternatives commands?"); then
         update-alternatives --install "/usr/lib/mozilla/plugins/libjavaplugin.so" "mozilla-javaplugin.so" "$lib_path" 10000
         update-alternatives --set "mozilla-javaplugin.so" "$lib_path"
     fi
-fi
+#fi
 
 # Create system preferences directory
 java_system_prefs_dir="/etc/.java/.systemPrefs"
