@@ -4,9 +4,7 @@ language: ruby
 services:
   - docker
 
-before_install:
-- chmod 777 *.sh
-- docker build --help 
-
 script:
+- chmod 777 *.sh 2> /dev/null
+- unane -a
 - ./build-all.sh
