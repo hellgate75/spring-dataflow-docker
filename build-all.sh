@@ -18,12 +18,8 @@ UNAME="$(uname -a 2> /dev/null)"
 TRAVIS_CI="no"
 if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	## Into Travis-CI build
-	sudo su -
-	cd $PWD/spring-cloud-config-server
-	unzip ssh.zip -d /root
-	chmod 600 /root/.ssh/*
-	cd $PWD
-	exit
+	sudo sh -c "cd $PWD/spring-cloud-config-server && unzip ssh.zip -d /root"
+	sudo sh -c "chmod 600 /root/.ssh/*"
 	cd ..
 	apt update && apt install -y maven
 	git clone git@github.com:hellgate75/dataflow-flow-centric-poc.git
