@@ -25,7 +25,7 @@ else
 fi
 CMD="java $JVM_ARGS -jar /opt/spring-cloud-group/dataflow-ms-config-server/jar/$APP_NAME.jar $MAIN_CLASS $ARGS"
 BOOTSTRAP_LOG_FILE="$LOG_FOLDER/$APP_NAME.log"
-if [ "yes" == "$REDIRECT_OUTPUT_TO_APP" ]; then
+if [ "yes" = "$REDIRECT_OUTPUT_TO_APP" ]; then
 	BOOTSTRAP_LOG_FILE="$LOG_FOLDER/$APP_NAME-$LOG_LEVEL.log"
 	nohup execute.sh "$CMD" > $BOOTSTRAP_LOG_FILE 2>&1 &
 else

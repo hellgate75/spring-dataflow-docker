@@ -1,9 +1,9 @@
 #!/bin/sh
 FOLDER="$(realpath "$(dirname "$0")")"
-if [[ "" == "$SERVER_RELEASE" ]]; then
+if [ "" = "$SERVER_RELEASE" ]; then
 	SERVER_RELEASE="1.0.0"
 fi
-if [[ "" == "$DOCKERHUB_USER" ]]; then
+if [ "" = "$DOCKERHUB_USER" ]; then
 	DOCKERHUB_USER=hellgate75
 fi
 VARRGS=""

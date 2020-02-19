@@ -12,7 +12,7 @@ if [ "yes" != "$DEBUG_ALL_SERVERS" ]; then
 	DEBUG_SPRING=""
 fi
 CMD="java $JVM_ARGS -jar /opt/$APP_GROUP/$APP_NAME/jar/$APP_NAME.jar $MAIN_CLASS $ARGS $DEBUG_SPRING"
-if [ "yes" == "$SKIP_LOGGING" ]; then
+if [ "yes" = "$SKIP_LOGGING" ]; then
 	nohup execute.sh "$CMD"
 else
 	BOOTSTRAP_LOG_FILE="/opt/$APP_GROUP/log/$APP_NAME/$APP_NAME-$LOG_LEVEL.log"

@@ -1,8 +1,8 @@
 #!/bin/sh
 MAVEN="$(which mvn)"
-if [[ "" == "$MAVEN" ]]; then
+if [ "" = "$MAVEN" ]; then
 	MAVEN="$(ls ~/apps/|grep apache-maven)"
-	if [[ "" != "$MAVEN" ]]; then
+	if [ "" != "$MAVEN" ]; then
 		echo "Found maven path '~/apps/$MAVEN/bin'"
 		MAVEN="$(ls ~/apps/$MAVEN/bin/mvn)"
 	else

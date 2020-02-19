@@ -65,13 +65,13 @@ while getopts "p:h" opts; do
     esac
 done
 
-if [[ -z $java_dist_dir ]]; then
+if [ -z $java_dist_dir ]; then
     echo "Please provide Java installation directory."
 fi
 
 echo "Uninstalling: $java_dist_dir"
 
-if [[ ! -f $java_dist_dir/bin/java ]]; then
+if [ ! -f $java_dist_dir/bin/java ]; then
     echo "Please specify a valid Java distribution directory"
     exit 1
 fi
@@ -82,13 +82,13 @@ if (confirm "Run update-alternatives commands?"); then
     declare -a commands=($(ls -1 ${java_dist_dir}/bin))
     for command in "${commands[@]}"; do
         command_path="$java_dist_dir/bin/$command"
-        if [[ -x $command_path ]]; then
+        if [ -x $command_path ]; then
             update-alternatives --remove "$command" "$command_path"
         fi
     done
 
     lib_path="$java_dist_dir/jre/lib/amd64/libnpjp2.so"
-    if [[ -d "/usr/lib/mozilla/plugins/" ]] && [[ -f $lib_path ]]; then
+    if [ -d "/usr/lib/mozilla/plugins/" ] && [ -f $lib_path ]; then
         update-alternatives --remove "mozilla-javaplugin.so" "$lib_path"
     fi
 fi
@@ -99,9 +99,9 @@ fi
 
 jdk_major_version=""
 
-if [[ $java_dist_dir =~ .*jdk1\.([0-9]*).* ]]; then
+if [ $java_dist_dir =~ .*jdk1\.([0-9]*).* ]; then
     jdk_major_version=$(echo $java_dist_dir | sed -nE 's/.*jdk1\.([0-9]*).*/\1/p')
-elif [[ $java_dist_dir =~ .*jdk-([0-9]*).* ]]; then
+elif [ $java_dist_dir =~ .*jdk-([0-9]*).* ]; then
     jdk_major_version=$(echo $java_dist_dir | sed -nE 's/.*jdk-([0-9]*).*/\1/p')
 fi
 

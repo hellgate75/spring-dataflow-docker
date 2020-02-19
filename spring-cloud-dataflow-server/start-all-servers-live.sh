@@ -15,7 +15,7 @@ start-skipper-server.sh
 COUNTER=0
 OUTCOME=""
 printf "Waiting for Spring Cloud Skipper Server to become active ..."
-while [ "" == $OUTCOME ] && [ $COUNTER -le 20  ] ; do 
+while [ "" = $OUTCOME ] && [ $COUNTER -le 20  ] ; do 
    sleep 20
    COUNTER=$((COUNTER + 1))
    printf "."
@@ -23,7 +23,7 @@ while [ "" == $OUTCOME ] && [ $COUNTER -le 20  ] ; do
 done
 
 
-if [ "" == "$OUTCOME" ]; then
+if [ "" = "$OUTCOME" ]; then
 	echo "Spring Cloud Skipper Server seems not started!!"
 	if  [ "true" != "$SHUTDOWN_ON_JVM_EXIT" ]; then
 		echo "Taking up the container to check the problem, please type:"

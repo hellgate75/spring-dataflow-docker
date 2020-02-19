@@ -2,7 +2,7 @@
 
 mkdir -p $(pwd)/var
 
-if [[ ! -e $(pwd)/var/spring-cloud-dataflow-server.pid ]]; then
+if [ ! -e $(pwd)/var/spring-cloud-dataflow-server.pid ]; then
 	echo "Process Id file for Spring Cloud Dataflow Server dosn't exists!!"
 else
 	PID="$(cat $(pwd)/var/spring-cloud-dataflow-server.pid)"

@@ -5,11 +5,11 @@ function usage() {
   echo "   [--help][-h]  Print current script usage help"
 }
 
-if [[ '-h' == "$1" ]]; then
+if [ '-h' = "$1" ]; then
    echo -e "$(usage)"
    exit 0
 fi
-if [[ '--help' == "$1" ]]; then
+if [ '--help' = "$1" ]; then
    echo -e "$(usage)"
    exit 0
 fi

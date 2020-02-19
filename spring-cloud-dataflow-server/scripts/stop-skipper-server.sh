@@ -1,7 +1,7 @@
 #!/bin/sh
 mkdir -p $(pwd)/var
 
-if [[ ! -e $(pwd)/var/spring-cloud-skipper-server.pid ]]; then
+if [ ! -e $(pwd)/var/spring-cloud-skipper-server.pid ]; then
 	echo "Process Id file for Spring Cloud Skipper Server dosn't exists!!"
 else
 	PID="$(cat $(pwd)/var/spring-cloud-skipper-server.pid)"

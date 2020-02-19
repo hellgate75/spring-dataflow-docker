@@ -5,7 +5,7 @@ FOLDER="$PWD"
 
 source "$FOLDER/docker-vars.sh"
 source "$FOLDER/push-config.sh"
-if [[ -e $FOLDER/push-dev-config.sh ]]; then
+if [ -e $FOLDER/push-dev-config.sh ]; then
 	source "$FOLDER/push-dev-config.sh"
 fi
 
@@ -16,7 +16,7 @@ DOCKERHUB_TOKEN=""
 #### C H E C K   D O C K E R - H U B   V A R I A B L E S   P R E S E N C E ####
 ###############################################################################
 
-if [[ "" != "$(which docker-hub-variables)" ]]; then
+if [ "" != "$(which docker-hub-variables)" ]; then
 	## Sample docker-hub-variables file
 	## #!/bin/sh -e
 	## DOCKERHUB_USER="xxxxxxxxxxxx"
@@ -28,8 +28,8 @@ fi
 #### C H E C K   D O C K E R - H U B   A C C E S S   I N F O R M A T I O N ####
 ###############################################################################
 
-if [[ "" != "$DOCKERHUB_USER" ]]; then
-   if [[ "" != "$DOCKERHUB_TOKEN" ]]; then
+if [ "" != "$DOCKERHUB_USER" ]; then
+   if [ "" != "$DOCKERHUB_TOKEN" ]; then
 		echo "Logging to Docker Hub, with given token / password"
 		docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN 2> /dev/null
    else
@@ -37,13 +37,13 @@ if [[ "" != "$DOCKERHUB_USER" ]]; then
 		docker login -u $DOCKERHUB_USER --password-stdin
    fi
 else
-	if [[ "" != "$(which connect-docker-hub)" ]]; then
+	if [ "" != "$(which connect-docker-hub)" ]; then
 		## Sample connect-docker-hub file
 		## #!/bin/sh
 		## DOCKERHUB_USER="xxxxxxxxxxxx"
 		## DOCKERHUB_TOKEN="xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx"
-		## if [[ "" != "$DOCKERHUB_USER" ]]; then
-   		## if [[ "" != "$DOCKERHUB_TOKEN" ]]; then
+		## if [ "" != "$DOCKERHUB_USER" ]; then
+   		## if [ "" != "$DOCKERHUB_TOKEN" ]; then
 		##                 echo "Logging to Docker Hub, with given token / password"
 		##                 docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN 2> /dev/null
 		##    else
@@ -61,7 +61,7 @@ fi
 #### R A B B I T  M Q ####
 ##########################
 
-if [[ "" == "$(docker image ls | grep rabbitmq | grep $RABBITMQ_RELEASE)" ]]; then
+if [ "" = "$(docker image ls | grep rabbitmq | grep $RABBITMQ_RELEASE)" ]; then
    echo "Pulling RabbitMQ v. $RABBITMQ_RELEASE docker image"
    docker pull rabbitmq:$RABBITMQ_RELEASE
 else
@@ -77,8 +77,8 @@ cd $RABBITMQ_FOLDER
 sh ./create-custom-rabbitmq-docker-image.sh
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_RABBITMQ" ]]; then
-  if [[ "0" != "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
+if [ "true" = "$PUSH_RABBITMQ" ]; then
+  if [ "0" != "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
      docker push $DOCKERHUB_USER/rabbitmq:$CUSTOM_RABBITMQ_RELEASE
   fi
 else
@@ -93,7 +93,7 @@ cd "$PWD"
 
 
 #MONGO_FOLDER="$FOLDER/system-services-mongodb"
-#if [[ "" == "$(docker image ls | grep mongo | grep $MONGO_RELEASE)" ]]; then
+#if [ "" = "$(docker image ls | grep mongo | grep $MONGO_RELEASE)" ]; then
 #   echo "Pulling MongoDb v. $MONGO_RELEASE docker image"
 #   docker pull mongo:$MONGO_RELEASE
 #else
@@ -113,14 +113,14 @@ cd "$PWD"
 JDK_FOLDER="$FOLDER/system-infra-oracle-jdk-1.8"
 echo "Creating Oracle JDK v. $JDK_VERSION Ubuntu docker image"
 cd "$JDK_FOLDER"
-if [[ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]]; then
+if [ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]; then
 curl -L https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/flow-centric/PoC/jdk-8u241-linux-x64.tar.gz -o $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz
 fi
 docker --debug image build --rm . -t $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_JDK" ]]; then
-  if [[ "" != "$DOCKERHUB_USER" ]]; then
+if [ "true" = "$PUSH_JDK" ]; then
+  if [ "" != "$DOCKERHUB_USER" ]; then
      docker push $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
   fi
 else
@@ -141,8 +141,8 @@ cd "$H2D_FOLDER"
 docker --debug image build --rm . -t $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_H2D" ]]; then
-  if [[ "" != "$DOCKERHUB_USER" ]]; then
+if [ "true" = "$PUSH_H2D" ]; then
+  if [ "" != "$DOCKERHUB_USER" ]; then
      docker push $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
   fi
 else
@@ -165,9 +165,9 @@ cd $CONFIG_SERVER_FOLDER
 ./create-config-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_CONFIG_SERVER" ]]; then
+if [ "true" = "$PUSH_CONFIG_SERVER" ]; then
   cd $PWD
-  if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
+  if [ "0" = "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
      docker push $DOCKERHUB_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
   fi
 else
@@ -188,9 +188,9 @@ cd $DATAFLOW_SERVER_FOLDER
 ./create-dataflow-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_DATAFLOW_SERVER" ]]; then
+if [ "true" = "$PUSH_DATAFLOW_SERVER" ]; then
   cd $PWD
-  if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
+  if [ "0" = "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
      docker push $DOCKERHUB_USER/spring-cloud-dataflow-server:$DATAFLOW_SERVER_RELEASE
   fi
 else
@@ -201,9 +201,9 @@ fi
 ./create-dataflow-live-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
-if [[ "true" == "$PUSH_DATAFLOW_SERVER" ]]; then
+if [ "true" = "$PUSH_DATAFLOW_SERVER" ]; then
   cd $PWD
-  if [[ "0" == "$RES" ]] && [[ "" != "$DOCKERHUB_USER" ]]; then
+  if [ "0" = "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
      docker push $DOCKERHUB_USER/spring-cloud-dataflow-live-server:$DATAFLOW_SERVER_RELEASE
   fi
 else
@@ -217,10 +217,10 @@ fi
 cd "$PWD"
 
 
-if [[ "" != "$DOCKERHUB_USER" ]]; then
+if [ "" != "$DOCKERHUB_USER" ]; then
    docker logout
 else
-	if [[ "" != "$(which disconnect-docker-hub)" ]]; then
+	if [ "" != "$(which disconnect-docker-hub)" ]; then
 		## Sample docker-hub-variables file
 		## #!/bin/sh
 		## docker logout

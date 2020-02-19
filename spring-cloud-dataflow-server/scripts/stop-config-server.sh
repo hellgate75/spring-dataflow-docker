@@ -2,7 +2,7 @@
 
 mkdir -p $(pwd)/var
 
-if [[ ! -e $(pwd)/var/mergelayer-config-server.pid ]]; then
+if [ ! -e $(pwd)/var/mergelayer-config-server.pid ]; then
 	echo "Process Id file for Merge Layer Spring Cloud Config Server dosn't exists!!"
 else
 	PID="$(cat $(pwd)/var/mergelayer-config-server.pid)"
