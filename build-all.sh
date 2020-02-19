@@ -25,24 +25,29 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	cd ..
 	git config --global user.name "hellgate75"
 	git config --global user.email "hellgate75@gmail.com"
+	echo "Cloning repository..."
 	git clone --depth=50 --branch=master https://github.com/hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
+	echo "List of $(pwd) folder:"
+	ls -latr
+	TRAVIS_CI="yes"
 else
 	cd $DATAFLOW_CENTRIC_PROJECT_CONTAINING_FOLDER/dataflow-flow-centric-poc
-	
+	TRAVIS_CI="no"
 fi 
+PWD="$(pwd)"
+FOLDER="$PWD"
 mvn clean install
 if [ ! -e ./spring-dataflow-docker ]; then
-	echo "Linking to $PRE_PWD"
-	ln -s spring-dataflow-docker $PRE_PWD
+	echo "Linking to $PWD/spring-dataflow-docker -> $PRE_PWD"
+	ln -s $PWD/spring-dataflow-docker $PRE_PWD 2>&1
 	echo "List of $PWD folder:"
 	ls -latr
 fi
 cd spring-dataflow-docker
 PWD="$(pwd)"
 FOLDER="$PWD"
-echo "current folder: $PWD"
-TRAVIS_CI="yes"
+echo "Current folder: $PWD"
 
 
 ###############################################################################
