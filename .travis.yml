@@ -4,9 +4,6 @@ language: ruby
 services:
   - docker
 
-before_install:
-- chmod 777 *.sh
-- ./pull-from-remote.sh
-
 script:
+- chmod 777 *.sh
 - ./build-all.sh
