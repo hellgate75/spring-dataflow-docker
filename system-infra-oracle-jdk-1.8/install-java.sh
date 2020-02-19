@@ -34,16 +34,17 @@ function usage() {
 }
 
 function confirm() {
+	true
     # call with a prompt string or use a default
-    read -r -p "${1:-Are you sure?} [y/N] " response
-    case $response in
-    [yY][eE][sS] | [yY])
-        true
-        ;;
-    *)
-        false
-        ;;
-    esac
+#    read -r -p "${1:-Are you sure?} [y/N] " response
+#    case $response in
+#    [yY][eE][sS] | [yY])
+#        true
+#        ;;
+#    *)
+##        false
+#        ;;
+#    esac
 }
 
 # Make sure the script is running as root.
@@ -72,7 +73,7 @@ while getopts "f:p:h" opts; do
     esac
 done
 
-if [ ! -f $java_dist ]; then
+if [[ ! -f $java_dist ]]; then
     echo "Please specify the Java distribution file."
     echo "Use -h for help."
     exit 1
@@ -81,7 +82,7 @@ fi
 # Validate Java Distribution
 java_dist_filename=$(basename $java_dist)
 
-if [ ${java_dist_filename: -7} != ".tar.gz" ]; then
+if [[ ${java_dist_filename: -7} != ".tar.gz" ]]; then
     echo "Java distribution must be a valid tar.gz file."
     exit 1
 fi
@@ -93,12 +94,12 @@ if ! command -v unzip >/dev/null 2>&1; then
 fi
 
 # Create the default directory if user has not specified any other path
-if [ $java_dir = $default_java_dir ]; then
+if [[ $java_dir == $default_java_dir ]]; then
     mkdir -p $java_dir
 fi
 
 #Validate java directory
-if [ ! -d $java_dir ]; then
+if [[ ! -d $java_dir ]]; then
     echo "Please specify a valid Java installation directory."
     exit 1
 fi
@@ -108,7 +109,7 @@ echo "Installing: $java_dist_filename"
 # Check Java executable
 java_exec="$(tar -tzf $java_dist | grep ^[^/]*/bin/java$ || echo "")"
 
-if [ -z $java_exec ]; then
+if [[ -z $java_exec ]]; then
     echo "Could not find \"java\" executable in the distribution. Please specify a valid Java distribution."
     exit 1
 fi
@@ -118,7 +119,7 @@ jdk_dir="$(echo $java_exec | cut -f1 -d"/")"
 extracted_dirname=$java_dir"/"$jdk_dir
 
 # Extract Java Distribution
-if [ ! -d $extracted_dirname ]; then
+if [[ ! -d $extracted_dirname ]]; then
     echo "Extracting $java_dist to $java_dir"
     tar -xof $java_dist -C $java_dir
     echo "JDK is extracted to $extracted_dirname"
@@ -127,7 +128,7 @@ else
     exit 1
 fi
 
-if [ ! -f "${extracted_dirname}/bin/java" ]; then
+if [[ ! -f "${extracted_dirname}/bin/java" ]]; then
     echo "ERROR: The path $extracted_dirname is not a valid Java installation."
     exit 1
 fi
@@ -140,7 +141,7 @@ java_9up_dir_regex="^jdk-([0-9]*).*$"
 # JDK Major Version
 jdk_major_version=""
 
-if [ $jdk_dir =~ $java_78_dir_regex ]; then
+if [[ $jdk_dir =~ $java_78_dir_regex ]]; then
     jdk_major_version=$(echo $jdk_dir | sed -nE "s/$java_78_dir_regex/\1/p")
 else
     jdk_major_version=$(echo $jdk_dir | sed -nE "s/$java_9up_dir_regex/\1/p")
@@ -148,12 +149,12 @@ fi
 
 # Install Demos
 
-if [ $jdk_dir =~ $java_78_dir_regex ]; then
+if [[ $jdk_dir =~ $java_78_dir_regex ]]; then
     # Demos are only available for Java 7 and 8
     demos_dist=$(dirname $java_dist)"/"$(echo $java_dist_filename | sed 's/\.tar\.gz/-demos\0/')
 fi
 
-if [ -f $demos_dist ] && [ ! -d $extracted_dirname/demo ]; then
+if [[ -f $demos_dist && ! -d $extracted_dirname/demo ]]; then
     # No demo directory
     if (confirm "Extract demos?"); then
         echo "Extracting $demos_dist to $java_dir"
@@ -166,13 +167,13 @@ fi
 
 unlimited_jce_policy_dist=""
 
-if [ $jdk_dir =~ ^jdk1\.7.* ]; then
+if [[ $jdk_dir =~ ^jdk1\.7.* ]]; then
     unlimited_jce_policy_dist="$(dirname $java_dist)/UnlimitedJCEPolicyJDK7.zip"
-elif [ $jdk_dir =~ ^jdk1\.8.* ]; then
+elif [[ $jdk_dir =~ ^jdk1\.8.* ]]; then
     unlimited_jce_policy_dist="$(dirname $java_dist)/jce_policy-8.zip"
 fi
 
-if [ -f $unlimited_jce_policy_dist ]; then
+if [[ -f $unlimited_jce_policy_dist ]]; then
     if (confirm "Install Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files?"); then
         echo "Extracting policy jars in $unlimited_jce_policy_dist to $extracted_dirname/jre/lib/security"
         unzip -j -o $unlimited_jce_policy_dist *.jar -d $extracted_dirname/jre/lib/security
@@ -180,27 +181,27 @@ if [ -f $unlimited_jce_policy_dist ]; then
 fi
 
 # Run update-alternatives commands
-#if (confirm "Run update-alternatives commands?"); then
+if (confirm "Run update-alternatives commands?"); then
     echo "Running update-alternatives..."
     declare -a commands=($(ls -1 ${extracted_dirname}/bin))
     for command in "${commands[@]}"; do
         command_path=$extracted_dirname/bin/$command
-        if [ -x $command_path ]; then
+        if [[ -x $command_path ]]; then
             update-alternatives --install "/usr/bin/$command" "$command" "$command_path" 10000
             update-alternatives --set "$command" "$command_path"
         fi
     done
 
     lib_path=$extracted_dirname/jre/lib/amd64/libnpjp2.so
-    if [ -d "/usr/lib/mozilla/plugins/" ] && [ -f $lib_path ]; then
+    if [[ -d "/usr/lib/mozilla/plugins/" ]] && [[ -f $lib_path ]]; then
         update-alternatives --install "/usr/lib/mozilla/plugins/libjavaplugin.so" "mozilla-javaplugin.so" "$lib_path" 10000
         update-alternatives --set "mozilla-javaplugin.so" "$lib_path"
     fi
-#fi
+fi
 
 # Create system preferences directory
 java_system_prefs_dir="/etc/.java/.systemPrefs"
-if [ ! -d $java_system_prefs_dir ]; then
+if [[ ! -d $java_system_prefs_dir ]]; then
     if (confirm "Create Java System Prefs Directory ($java_system_prefs_dir) and change ownership to $SUDO_USER:$SUDO_USER?"); then
         echo "Creating $java_system_prefs_dir"
         mkdir -p $java_system_prefs_dir
@@ -208,14 +209,14 @@ if [ ! -d $java_system_prefs_dir ]; then
     fi
 fi
 
-#if (confirm "Do you want to set JAVA_HOME environment variable in $HOME/.bashrc?"); then
+if (confirm "Do you want to set JAVA_HOME environment variable in $HOME/.bashrc?"); then
     if grep -q "export JAVA_HOME=.*" $HOME/.bashrc; then
         sed -i "s|export JAVA_HOME=.*|export JAVA_HOME=$extracted_dirname|" $HOME/.bashrc
     else
         echo "export JAVA_HOME=$extracted_dirname" >>$HOME/.bashrc
     fi
     source $HOME/.bashrc
-#fi
+fi
 
 applications_dir="$HOME/.local/share/applications"
 
@@ -233,7 +234,7 @@ _EOF_
     chmod +x $shortcut_file
 }
 
-if [ -d $applications_dir ] && [ -f $extracted_dirname/bin/jmc ]; then
+if [[ -d $applications_dir ]] && [[ -f $extracted_dirname/bin/jmc ]]; then
     if (confirm "Do you want to create a desktop shortcut to JMC?"); then
         create_jmc_shortcut
     fi
