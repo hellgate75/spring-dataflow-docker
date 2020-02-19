@@ -46,7 +46,6 @@ if [ ! -e ./spring-dataflow-docker ]; then
 	ls -latr
 fi
 cd spring-dataflow-docker
-PWD="$(pwd)"
 FOLDER="$PWD"
 echo "Current folder: $PWD"
 
