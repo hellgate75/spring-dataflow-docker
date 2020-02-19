@@ -60,6 +60,9 @@ else
 fi
 
 
+DOCKER_IMAGE_USER=hellgate75
+
+
 ##########################
 #### R A B B I T  M Q ####
 ##########################
@@ -81,8 +84,8 @@ sh ./create-custom-rabbitmq-docker-image.sh
 RES="$?"
 echo "Results: $RES"
 if [ "true" = "$PUSH_RABBITMQ" ]; then
-  if [ "0" != "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
-     docker push $DOCKERHUB_USER/rabbitmq:$CUSTOM_RABBITMQ_RELEASE
+  if [ "0" != "$RES" ] && [ "" != "$DOCKER_IMAGE_USER" ]; then
+     docker push $DOCKER_IMAGE_USER/rabbitmq:$CUSTOM_RABBITMQ_RELEASE
   fi
 else
 	echo "Custom RabbitMQ v. $RABBITMQ_RELEASE-flow-centric docker image already present!!"
@@ -119,12 +122,12 @@ cd "$JDK_FOLDER"
 if [ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]; then
 curl -L https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/flow-centric/PoC/jdk-8u241-linux-x64.tar.gz -o $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz
 fi
-docker --debug image build --rm . -t $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
+docker --debug image build --rm . -t $DOCKER_IMAGE_USER/oracle-jdk8:$JDK_VERSION
 RES="$?"
 echo "Results: $RES"
 if [ "true" = "$PUSH_JDK" ]; then
   if [ "" != "$DOCKERHUB_USER" ]; then
-     docker push $DOCKERHUB_USER/oracle-jdk8:$JDK_VERSION
+     docker push $DOCKER_IMAGE_USER/oracle-jdk8:$JDK_VERSION
   fi
 else
 	echo "Oracle JDK v. $JDK_VERSION Ubuntu docker image already present!!"
@@ -141,12 +144,12 @@ cd "$PWD"
 H2D_FOLDER="$FOLDER/system-services-h2-database-server"
 echo "Creating H2 Database v. $H2_DATABASE_RELEASE docker image"
 cd "$H2D_FOLDER"
-docker --debug image build --rm . -t $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
+docker --debug image build --rm . -t $DOCKER_IMAGE_USER/h2-database:$H2_DATABASE_RELEASE
 RES="$?"
 echo "Results: $RES"
 if [ "true" = "$PUSH_H2D" ]; then
   if [ "" != "$DOCKERHUB_USER" ]; then
-     docker push $DOCKERHUB_USER/h2-database:$H2_DATABASE_RELEASE
+     docker push $DOCKER_IMAGE_USER/h2-database:$H2_DATABASE_RELEASE
   fi
 else
 	echo "H2 Database v. $H2_DATABASE_RELEASE docker image already present!!"
@@ -171,7 +174,7 @@ echo "Results: $RES"
 if [ "true" = "$PUSH_CONFIG_SERVER" ]; then
   cd $PWD
   if [ "0" = "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
-     docker push $DOCKERHUB_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
+     docker push $DOCKER_IMAGE_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
   fi
 else
 	echo "Spring Cloud Config Server for Flow Centric v. $CONFIG_SERVER_RELEASE docker image already present!!"
@@ -194,7 +197,7 @@ echo "Results: $RES"
 if [ "true" = "$PUSH_DATAFLOW_SERVER" ]; then
   cd $PWD
   if [ "0" = "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
-     docker push $DOCKERHUB_USER/spring-cloud-dataflow-server:$DATAFLOW_SERVER_RELEASE
+     docker push $DOCKER_IMAGE_USER/spring-cloud-dataflow-server:$DATAFLOW_SERVER_RELEASE
   fi
 else
 	echo "Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image already present!!"
@@ -207,7 +210,7 @@ echo "Results: $RES"
 if [ "true" = "$PUSH_DATAFLOW_SERVER" ]; then
   cd $PWD
   if [ "0" = "$RES" ] && [ "" != "$DOCKERHUB_USER" ]; then
-     docker push $DOCKERHUB_USER/spring-cloud-dataflow-live-server:$DATAFLOW_SERVER_RELEASE
+     docker push $DOCKER_IMAGE_USER/spring-cloud-dataflow-live-server:$DATAFLOW_SERVER_RELEASE
   fi
 else
 	echo "Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image already present!!"
