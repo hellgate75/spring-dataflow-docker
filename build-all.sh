@@ -23,7 +23,7 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	chmod 600 /root/.ssh/*
 	cd $PWD
 	cd ..
-	apt update && apt install maven
+	apt update && apt install -y maven
 	git clone git@github.com:hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
 else
