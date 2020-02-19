@@ -14,8 +14,8 @@ COPY ./install-java.sh /root/jdk-install
 COPY ./uninstall-java.sh /root
 
 # Change shell script permissions
-RUN chmod +x /root/jdk-install/install-java.sh\
- chmod +x /root/uninstall-java.sh
+RUN chmod 777 /root/jdk-install/install-java.sh\
+ chmod 777 /root/uninstall-java.sh
 
 # Ubuntu updates and new packages installation
 RUN apt-get update && \

@@ -68,9 +68,9 @@ COPY ./install-h2-database.sh /root/downloads
 COPY ./h2.sh /root/patches
 
 # Change shell script permissions
-RUN chmod +x /root/downloads/env.sh
-RUN chmod +x /root/downloads/download-h2-database.sh
-RUN chmod +x /root/downloads/install-h2-database.sh
+RUN chmod 777 /root/downloads/env.sh
+RUN chmod 777 /root/downloads/download-h2-database.sh
+RUN chmod 777 /root/downloads/install-h2-database.sh
 RUN chmod 777 /root/patches/h2.sh
 RUN chmod 666 /var/h2-database/data
 

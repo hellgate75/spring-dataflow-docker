@@ -16,7 +16,7 @@ DOCKERHUB_TOKEN=""
 
 UNAME="$(uname -a 2> /dev/null)"
 TRAVIS_CI="no"
-if [ "" != "$UNAME" ] && [ "" == "$(echo $UNAME|grep MINGW)" ] && [ "" != "$(echo $UNAME|grep Linux)" ]; then
+if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	## Into Travis-CI build
 	cd ..
 	apt update && apt install maven
@@ -27,7 +27,9 @@ else
 	
 fi 
 mvn clean install
-ln -s spring-dataflow-docker ../spring-dataflow-docker
+if [ ! -e ./spring-dataflow-docker ]; then
+	ln -s spring-dataflow-docker ../spring-dataflow-docker
+fi
 cd spring-dataflow-docker
 PWD="$(pwd)"
 FOLDER="$PWD"
@@ -308,4 +310,9 @@ else
 		disconnect-docker-hub
 	fi
 fi
+if [ -e ./spring-dataflow-docker ]; then
+    cd ..
+	rm -f spring-dataflow-docker
+fi
+
 exit 0
