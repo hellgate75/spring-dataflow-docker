@@ -9,6 +9,9 @@ if [ -e $FOLDER/push-dev-config.sh ]; then
 	. $FOLDER/push-dev-config.sh
 fi
 
+echo "environment variables:"
+env
+
 DOCKERHUB_USER=""
 DOCKERHUB_TOKEN=""
 
