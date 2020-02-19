@@ -9,8 +9,8 @@ if [ -e $FOLDER/push-dev-config.sh ]; then
 	. $FOLDER/push-dev-config.sh
 fi
 
-echo "environment variables:"
-env
+#echo "environment variables:"
+#env
 
 DOCKERHUB_USER=""
 DOCKERHUB_TOKEN=""
@@ -80,6 +80,7 @@ fi
 RABBITMQ_FOLDER="$FOLDER/system-services-rabbitmq"
 echo "Creating Custom RabbitMQ v. $RABBITMQ_RELEASE-flow-centric docker image"
 cd $RABBITMQ_FOLDER
+chmod 777 *.sh
 sh ./create-custom-rabbitmq-docker-image.sh
 RES="$?"
 echo "Results: $RES"
@@ -168,6 +169,7 @@ cd "$PWD"
 CONFIG_SERVER_FOLDER="$FOLDER/spring-cloud-config-server"
 echo "Creating Spring Cloud Config Server for Flow Centric v. $CONFIG_SERVER_RELEASE docker image"
 cd $CONFIG_SERVER_FOLDER
+chmod 777 *.sh
 ./create-config-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
@@ -191,6 +193,7 @@ cd "$PWD"
 DATAFLOW_SERVER_FOLDER="$FOLDER/spring-cloud-dataflow-server"
 echo "Creating Spring Cloud Dataflow Server for Flow Centric v. $DATAFLOW_SERVER_RELEASE docker image"
 cd $DATAFLOW_SERVER_FOLDER
+chmod 777 *.sh
 ./create-dataflow-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
