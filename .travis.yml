@@ -6,7 +6,7 @@ services:
 
 before_install:
 - chmod 777 *.sh
-- ./pull-from-remote.sh
+- docker build --help 
 
 script:
 - ./build-all.sh
