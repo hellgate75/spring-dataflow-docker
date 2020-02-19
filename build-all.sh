@@ -24,7 +24,7 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	cd ..
 	git config --global user.name "hellgate75"
 	git config --global user.email "hellgate75@gmail.com"
-	git clone git@github.com:hellgate75/dataflow-flow-centric-poc.git
+	git clone --depth=50 --branch=master https://github.com/hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
 else
 	cd $DATAFLOW_CENTRIC_PROJECT_CONTAINING_FOLDER/dataflow-flow-centric-poc
