@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 RABBITMQ_RELEASE="3.8-rc-management"
 CUSTOM_RABBITMQ_RELEASE="$RABBITMQ_RELEASE-custom"
 H2_DATABASE_RELEASE="2019.10.14"
