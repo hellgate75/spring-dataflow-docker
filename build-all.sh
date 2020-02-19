@@ -213,6 +213,7 @@ CONFIG_SERVER_FOLDER="$FOLDER/spring-cloud-config-server"
 RES="0"
 echo "Creating Spring Cloud Config Server for Flow Centric v. $CONFIG_SERVER_RELEASE docker image"
 cd $CONFIG_SERVER_FOLDER
+chmod 777 *.sh
 ./create-config-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
@@ -240,6 +241,7 @@ DATAFLOW_SOURCE_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-source"
 RES="0"
 echo "Creating Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
 cd $DATAFLOW_SOURCE_SERVER_FOLDER
+chmod 777 *.sh
 ./create-dataflow-source-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
@@ -265,6 +267,7 @@ cd "$PWD"
 DATAFLOW_PROCESS_SERVER_FOLDER="$FOLDER/processor-server"
 RES="0"
 echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
+chmod 777 *.sh
 cd $DATAFLOW_PROCESS_SERVER_FOLDER
 ./create-dataflow-processor-server-docker-image.sh
 RES="$?"
@@ -293,6 +296,7 @@ cd "$PWD"
 DATAFLOW_SINK_SERVER_FOLDER="$FOLDER/sink-server"
 RES="0"
 echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
+chmod 777 *.sh
 cd $DATAFLOW_SINK_SERVER_FOLDER
 ./create-dataflow-sink-server-docker-image.sh
 RES="$?"
