@@ -11,9 +11,11 @@ RUN mkdir /usr/lib/jvm
 # Copy required scripts
 COPY ./jdk-8u241-linux-x64.tar.gz /root/jdk-install
 COPY ./install-java.sh /root/jdk-install
+COPY ./uninstall-java.sh /root
 
 # Change shell script permissions
-RUN chmod +x /root/jdk-install/install-java.sh
+RUN chmod +x /root/jdk-install/install-java.sh\
+ chmod +x /root/uninstall-java.sh
 
 # Ubuntu updates and new packages installation
 RUN apt-get update && \
