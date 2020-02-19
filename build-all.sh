@@ -3,10 +3,10 @@
 PWD="$(pwd)"
 FOLDER="$PWD"
 
-source "$FOLDER/docker-vars.sh"
-source "$FOLDER/push-config.sh"
+. $FOLDER/docker-vars.sh
+. $FOLDER/push-config.sh
 if [ -e $FOLDER/push-dev-config.sh ]; then
-	source "$FOLDER/push-dev-config.sh"
+	. $FOLDER/push-dev-config.sh
 fi
 
 DOCKERHUB_USER=""
