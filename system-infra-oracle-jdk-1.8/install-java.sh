@@ -208,14 +208,14 @@ if [ ! -d $java_system_prefs_dir ]; then
     fi
 fi
 
-if (confirm "Do you want to set JAVA_HOME environment variable in $HOME/.bashrc?"); then
+#if (confirm "Do you want to set JAVA_HOME environment variable in $HOME/.bashrc?"); then
     if grep -q "export JAVA_HOME=.*" $HOME/.bashrc; then
         sed -i "s|export JAVA_HOME=.*|export JAVA_HOME=$extracted_dirname|" $HOME/.bashrc
     else
         echo "export JAVA_HOME=$extracted_dirname" >>$HOME/.bashrc
     fi
     source $HOME/.bashrc
-fi
+#fi
 
 applications_dir="$HOME/.local/share/applications"
 
