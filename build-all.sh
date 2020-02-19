@@ -21,7 +21,7 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	sudo sh -c "cd $PWD/spring-cloud-config-server && unzip ssh.zip -d /root"
 	sudo sh -c "chmod 600 /root/.ssh/*"
 	cd ..
-	apt update && apt install -y maven
+	sudo apt update && sudo apt install -y maven
 	git clone git@github.com:hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
 else
@@ -30,7 +30,7 @@ else
 fi 
 mvn clean install
 if [ ! -e ./spring-dataflow-docker ]; then
-	ln -s spring-dataflow-docker ../spring-dataflow-docker
+	ln -s spring-dataflow-docker $PWD
 fi
 cd spring-dataflow-docker
 PWD="$(pwd)"
