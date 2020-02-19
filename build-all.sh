@@ -16,6 +16,7 @@ DOCKERHUB_TOKEN=""
 
 UNAME="$(uname -a 2> /dev/null)"
 TRAVIS_CI="no"
+PRE_PWD="$(pwd)"
 if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	## Into Travis-CI build
 	sudo sh -c "apt update && apt install -y openssh-server maven"
@@ -32,7 +33,10 @@ else
 fi 
 mvn clean install
 if [ ! -e ./spring-dataflow-docker ]; then
-	ln -s spring-dataflow-docker $PWD
+	echo "Linking to $PRE_PWD"
+	ln -s spring-dataflow-docker $PRE_PWD
+	echo "List of $PWD folder:"
+	ls -latr
 fi
 cd spring-dataflow-docker
 PWD="$(pwd)"
