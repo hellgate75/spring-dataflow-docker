@@ -326,7 +326,6 @@ if [ "true" = "$PUSH_DATAFLOW_PROCESS_SERVER" ]; then
   cd $PWD
   if [ "0" = "$RES" ] && [ "" != "$DOCKER_IMAGE_USER" ] && [ "no" = "$TRAVIS_CI" ]; then
      docker push $DOCKER_IMAGE_USER/spring-cloud-dataflow-processor-server:$PROCESS_SERVER_RELEASE
-  else
   fi
 else
 	echo "Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image push not required!!"
