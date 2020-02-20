@@ -14,15 +14,14 @@ COPY ./install-java.sh /root/jdk-install
 COPY ./uninstall-java.sh /root
 
 # Change shell script permissions
-RUN chmod +x /root/jdk-install/install-java.sh\
- chmod +x /root/uninstall-java.sh
-
 # Ubuntu updates and new packages installation
-RUN apt-get update && \
-	apt-get install -y wget zip unzip vim iputils-* net-tools curl  && \
-    apt-get clean all && \
-	rm -rf /var/lib/apt/lists/* && \
-	rm -rf /var/cache/oracle-jdk8-installer
+RUN chmod 777 /root/jdk-install/install-java.sh &&\
+ chmod 777 /root/uninstall-java.sh &&\
+ apt-get update && \
+ apt-get install -y wget zip unzip vim iputils-* net-tools curl  && \
+ apt-get clean all && \
+ rm -rf /var/lib/apt/lists/* && \
+ rm -rf /var/cache/oracle-jdk8-installer
 
 # Change of Working Directory
 WORKDIR /root/jdk-install

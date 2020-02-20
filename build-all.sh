@@ -15,9 +15,9 @@ fi
 DOCKERHUB_USER=""
 DOCKERHUB_TOKEN=""
 
-###############################################################################
-#### C H E C K   D O C K E R - H U B   V A R I A B L E S   P R E S E N C E ####
-###############################################################################
+echo "###############################################################################"
+echo "#### C H E C K   D O C K E R - H U B   V A R I A B L E S   P R E S E N C E ####"
+echo "###############################################################################"
 
 if [ "" != "$(which docker-hub-variables)" ]; then
 	## Sample docker-hub-variables file
@@ -27,9 +27,9 @@ if [ "" != "$(which docker-hub-variables)" ]; then
 	source "$(which docker-hub-variables)"
 fi
 
-###############################################################################
-#### C H E C K   D O C K E R - H U B   A C C E S S   I N F O R M A T I O N ####
-###############################################################################
+echo "###############################################################################"
+echo "#### C H E C K   D O C K E R - H U B   A C C E S S   I N F O R M A T I O N ####"
+echo "###############################################################################"
 
 if [ "" != "$DOCKERHUB_USER" ]; then
    if [ "" != "$DOCKERHUB_TOKEN" ]; then
@@ -63,9 +63,9 @@ fi
 DOCKER_IMAGE_USER=hellgate75
 
 
-##########################
-#### R A B B I T  M Q ####
-##########################
+echo "##########################"
+echo "#### R A B B I T  M Q ####"
+echo "##########################"
 
 if [ "" = "$(docker image ls | grep rabbitmq | grep $RABBITMQ_RELEASE)" ]; then
    echo "Pulling RabbitMQ v. $RABBITMQ_RELEASE docker image"
@@ -117,9 +117,9 @@ cd "$PWD"
 #    mongo --host $(sh ./docker-machine-ip.sh):27017
 
 
-#############################
-#### C U S T O M   J D K ####
-#############################
+echo "#############################"
+echo "#### C U S T O M   J D K ####"
+echo "#############################"
 
 JDK_FOLDER="$FOLDER/system-infra-oracle-jdk-1.8"
 RES="0"
@@ -146,9 +146,9 @@ fi
 cd "$PWD"
 
 
-#########################################################
-#### C U S T O M   H 2  D A T A B A S E  S E R V E R ####
-#########################################################
+echo "#########################################################"
+echo "#### C U S T O M   H 2  D A T A B A S E  S E R V E R ####"
+echo "#########################################################"
 
 H2D_FOLDER="$FOLDER/system-services-h2-database-server"
 RES="0"
@@ -174,9 +174,9 @@ cd "$PWD"
 
 
 
-###########################################################################
-#### C U S T O M   S P R I N G   C L O U D   C O N F I G   S E R V E R ####
-###########################################################################
+echo "###########################################################################"
+echo "#### C U S T O M   S P R I N G   C L O U D   C O N F I G   S E R V E R ####"
+echo "###########################################################################"
 
 CONFIG_SERVER_FOLDER="$FOLDER/spring-cloud-config-server"
 RES="0"
@@ -202,9 +202,9 @@ fi
 cd "$PWD"
 
 
-###############################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   S E R V E R ####
-###############################################################################
+echo "###############################################################################"
+echo "#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   S E R V E R ####"
+echo "###############################################################################"
 
 DATAFLOW_SERVER_FOLDER="$FOLDER/spring-cloud-dataflow-server"
 RES="0"
