@@ -6,7 +6,9 @@ FOLDER="$PWD"
 DATAFLOW_CENTRIC_PROJECT_CONTAINING_FOLDER=".."
 
 . $FOLDER/docker-vars.sh
+
 . $FOLDER/push-config.sh
+
 if [ -e $FOLDER/push-dev-config.sh ]; then
 	. $FOLDER/push-dev-config.sh
 fi
@@ -17,6 +19,7 @@ DOCKERHUB_TOKEN=""
 UNAME="$(uname -a 2> /dev/null)"
 TRAVIS_CI="no"
 ORIGIN_FOLDER="$PWD"
+JAVA_PROJECT_FOLDER=""
 if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	## Into Travis-CI build
 	sudo sh -c "apt update && apt install -y openssh-server maven"
@@ -28,6 +31,7 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	echo "Cloning repository..."
 	git clone --depth=50 --branch=master https://github.com/hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
+	JAVA_PROJECT_FOLDER="$(pwd)"
 	echo "List of $(pwd) folder:"
 	ls -latr
 	TRAVIS_CI="yes"
