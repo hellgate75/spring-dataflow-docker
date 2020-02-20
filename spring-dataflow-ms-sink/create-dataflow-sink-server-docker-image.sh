@@ -19,6 +19,9 @@ fi
 
 cp $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-sink-poc/target/dataflow-ms-flow-centric-sink-poc-*.jar ./dataflow-ms-flow-centric-sink-poc.jar 
 
+echo "List Spring Cloud Dataflow Sink Microservice source folder:"
+echo "$(ls)"
+
 if [ -e ./dataflow-ms-flow-centric-sink-poc.jar   ]; then
 
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/spring-cloud-dataflow-sink-server:$SERVER_RELEASE
