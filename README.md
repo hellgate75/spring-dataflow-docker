@@ -37,7 +37,7 @@ We prapared customized containers for following services:
 
 * Spring Cloud Config Server available [here](/spring-cloud-config-server)
 
-* Spring Cloud Dataflow Server available [here](/spring-dataflow-server)
+* Spring Cloud Dataflow Server available [here](/spring-cloud-dataflow-server)
 
 
 
