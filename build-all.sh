@@ -28,7 +28,7 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	cd ..
 	git config --global user.name "hellgate75"
 	git config --global user.email "hellgate75@gmail.com"
-	echo "Cloning repository..."
+	echo "Cloning repository https://github.com/hellgate75/dataflow-flow-centric-poc.git ..."
 	git clone --depth=50 --branch=master https://github.com/hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
 	JAVA_PROJECT_FOLDER="$(pwd)"
@@ -46,7 +46,7 @@ if [ ! -e ./spring-dataflow-docker ]; then
 	echo "Linking $ORIGIN_FOLDER to $PWD/spring-dataflow-docker"
 	ln --help
 	ln -s $ORIGIN_FOLDER $(pwd)/spring-dataflow-docker 2>&1
-	echo "List of $PWD folder:"
+	echo "List of $PWD folder after linking the docker project:"
 	ls -latr
 fi
 cd spring-dataflow-docker
@@ -54,10 +54,11 @@ FOLDER="$PWD"
 echo "Current folder: $PWD"
 
 
-###############################################################################
-#### C H E C K   D O C K E R - H U B   V A R I A B L E S   P R E S E N C E ####
-###############################################################################
-
+echo ""
+echo "###############################################################################"
+echo "#### C H E C K   D O C K E R - H U B   V A R I A B L E S   P R E S E N C E ####"
+echo "###############################################################################"
+echo ""
 if [ "" != "$(which docker-hub-variables)" ]; then
 	## Sample docker-hub-variables file
 	## #!/bin/sh -e
@@ -66,9 +67,13 @@ if [ "" != "$(which docker-hub-variables)" ]; then
 	source "$(which docker-hub-variables)"
 fi
 
-###############################################################################
-#### C H E C K   D O C K E R - H U B   A C C E S S   I N F O R M A T I O N ####
-###############################################################################
+echo ""
+echo ""
+echo "###############################################################################"
+echo "#### C H E C K   D O C K E R - H U B   A C C E S S   I N F O R M A T I O N ####"
+echo "###############################################################################"
+echo ""
+echo ""
 
 if [ "" != "$DOCKERHUB_USER" ]; then
    if [ "" != "$DOCKERHUB_TOKEN" ]; then
@@ -100,9 +105,13 @@ fi
 
 DOCKER_IMAGE_USER="hellgate75"
 
-##########################
-#### R A B B I T  M Q ####
-##########################
+echo ""
+echo ""
+echo "##########################"
+echo "#### R A B B I T  M Q ####"
+echo "##########################"
+echo ""
+echo ""
 
 if [ "" = "$(docker image ls | grep rabbitmq | grep $RABBITMQ_RELEASE)" ]; then
    echo "Pulling RabbitMQ v. $RABBITMQ_RELEASE docker image"
@@ -118,6 +127,7 @@ RABBITMQ_FOLDER="$FOLDER/system-services-rabbitmq"
 RES="0"
 echo "Creating Custom RabbitMQ v. $RABBITMQ_RELEASE-flow-centric docker image"
 cd $RABBITMQ_FOLDER
+chmod 777 *.sh
 sh ./create-custom-rabbitmq-docker-image.sh
 RES="$?"
 echo "Results: $RES"
@@ -153,13 +163,18 @@ cd "$PWD"
 #    mongo --host $(sh ./docker-machine-ip.sh):27017
 
 
-#############################
-#### C U S T O M   J D K ####
-#############################
+echo ""
+echo ""
+echo "#############################"
+echo "#### C U S T O M   J D K ####"
+echo "#############################"
+echo ""
+echo ""
 RES="0"
 JDK_FOLDER="$FOLDER/system-infra-oracle-jdk-1.8"
 echo "Creating Oracle JDK v. $JDK_VERSION Ubuntu docker image"
 cd "$JDK_FOLDER"
+chmod 777 *.sh
 if [ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]; then
 curl -L https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/flow-centric/PoC/jdk-8u241-linux-x64.tar.gz -o $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz
 fi
@@ -181,14 +196,19 @@ fi
 cd "$PWD"
 
 
-#########################################################
-#### C U S T O M   H 2  D A T A B A S E  S E R V E R ####
-#########################################################
+echo ""
+echo ""
+echo "#########################################################"
+echo "#### C U S T O M   H 2  D A T A B A S E  S E R V E R ####"
+echo "#########################################################"
+echo ""
+echo ""
 
 H2D_FOLDER="$FOLDER/system-services-h2-database-server"
 RES="0"
 echo "Creating H2 Database v. $H2_DATABASE_RELEASE docker image"
 cd "$H2D_FOLDER"
+chmod 777 *.sh
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/h2-database:$H2_DATABASE_RELEASE
 RES="$?"
 echo "Results: $RES"
@@ -209,9 +229,13 @@ cd "$PWD"
 
 
 
-###########################################################################
-#### C U S T O M   S P R I N G   C L O U D   C O N F I G   S E R V E R ####
-###########################################################################
+echo ""
+echo ""
+echo "###########################################################################"
+echo "#### C U S T O M   S P R I N G   C L O U D   C O N F I G   S E R V E R ####"
+echo "###########################################################################"
+echo ""
+echo ""
 
 CONFIG_SERVER_FOLDER="$FOLDER/spring-cloud-config-server"
 RES="0"
@@ -237,9 +261,13 @@ fi
 cd "$PWD"
 
 
-###################################################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S O U R C E   S E R V I C E ####
-###################################################################################################
+echo ""
+echo ""
+echo "###################################################################################################"
+echo "#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S O U R C E   S E R V I C E ####"
+echo "###################################################################################################"
+echo ""
+echo ""
 
 DATAFLOW_SOURCE_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-source"
 RES="0"
@@ -264,15 +292,19 @@ if [ "0" != "$RES" ]; then
 fi
 cd "$PWD"
 
-########################################################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   P R O C E S S O R  S E R V I C E ####
-########################################################################################################
+echo ""
+echo ""
+echo "########################################################################################################"
+echo "#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   P R O C E S S O R  S E R V I C E ####"
+echo "########################################################################################################"
+echo ""
+echo ""
 
 DATAFLOW_PROCESS_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-processor"
 RES="0"
 echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
-chmod 777 *.sh
 cd $DATAFLOW_PROCESS_SERVER_FOLDER
+chmod 777 *.sh
 ./create-dataflow-processor-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
@@ -293,15 +325,19 @@ fi
 cd "$PWD"
 
 
-###############################################################################################
-#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S I N K   S E R V I C E ####
-###############################################################################################
+echo ""
+echo ""
+echo "###############################################################################################"
+echo "#### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S I N K   S E R V I C E ####"
+echo "###############################################################################################"
+echo ""
+echo ""
 
 DATAFLOW_SINK_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-sink"
 RES="0"
 echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
-chmod 777 *.sh
 cd $DATAFLOW_SINK_SERVER_FOLDER
+chmod 777 *.sh
 ./create-dataflow-sink-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
