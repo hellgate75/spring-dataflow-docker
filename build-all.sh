@@ -268,7 +268,7 @@ cd "$PWD"
 #### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   P R O C E S S O R  S E R V I C E ####
 ########################################################################################################
 
-DATAFLOW_PROCESS_SERVER_FOLDER="$FOLDER/processor-server"
+DATAFLOW_PROCESS_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-processor"
 RES="0"
 echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
 chmod 777 *.sh
@@ -297,7 +297,7 @@ cd "$PWD"
 #### C U S T O M   S P R I N G   C L O U D   D A T A F L O W   -   S I N K   S E R V I C E ####
 ###############################################################################################
 
-DATAFLOW_SINK_SERVER_FOLDER="$FOLDER/sink-server"
+DATAFLOW_SINK_SERVER_FOLDER="$FOLDER/spring-dataflow-ms-sink"
 RES="0"
 echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
 chmod 777 *.sh
