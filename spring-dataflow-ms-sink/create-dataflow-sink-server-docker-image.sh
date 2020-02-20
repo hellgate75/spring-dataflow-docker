@@ -15,7 +15,7 @@ if [ -e dataflow-ms-flow-centric-sink-poc.jar ]; then
 	rm -f dataflow-ms-flow-centric-sink-poc.jar
 fi
 
-ln -s $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-sink-poc/target/dataflow-ms-flow-centric-sink-poc-*.jar dataflow-ms-flow-centric-sink-poc.jar 
+cp $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-sink-poc/target/dataflow-ms-flow-centric-sink-poc-*.jar dataflow-ms-flow-centric-sink-poc.jar 
 
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/spring-cloud-dataflow-sink-server:$SERVER_RELEASE
 

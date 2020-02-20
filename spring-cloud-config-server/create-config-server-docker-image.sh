@@ -16,7 +16,7 @@ if [ -e dataflow-ms-config-server.jar ]; then
 	rm -f dataflow-ms-config-server.jar
 fi
 
-ln -s $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target/dataflow-ms-flow-centric-config-server-*.jar dataflow-ms-config-server.jar 
+cp $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target/dataflow-ms-flow-centric-config-server-*.jar dataflow-ms-config-server.jar 
 
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
 
