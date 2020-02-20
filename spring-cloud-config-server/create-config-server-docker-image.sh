@@ -17,6 +17,8 @@ if [ -e ./dataflow-ms-config-server.jar ]; then
 fi
 
 cp $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target/dataflow-ms-flow-centric-config-server-*.jar ./dataflow-ms-config-server.jar 
+echo "List Spring Cloud Config Server source folder:"
+echo "$(ls)"
 
 if [ -e ./dataflow-ms-config-server.jar  ]; then
 
