@@ -13,15 +13,22 @@ if [ -e $FOLDER/push-dev-config.sh ]; then
 	. $FOLDER/push-dev-config.sh
 fi
 
-DOCKERHUB_USER=""
-DOCKERHUB_TOKEN=""
+export DOCKERHUB_USER=""
+export DOCKERHUB_TOKEN=""
 
-UNAME="$(uname -a 2> /dev/null)"
-TRAVIS_CI="no"
-ORIGIN_FOLDER="$PWD"
-JAVA_PROJECT_FOLDER=""
+export UNAME="$(uname -a 2> /dev/null)"
+export TRAVIS_CI="no"
+export ORIGIN_FOLDER="$PWD"
+export JAVA_PROJECT_FOLDER=""
 if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	## Into Travis-CI build
+	echo ""
+	echo ""
+	echo "###################################################"
+	echo "#### T R E V I S - C I   E N V I R O N M E N T ####"
+	echo "###################################################"
+	echo ""
+	echo ""
 	sudo sh -c "apt update && apt install -y openssh-server maven"
 	sudo sh -c "cd $PWD/spring-cloud-config-server && unzip ssh.zip -d /root"
 	sudo sh -c "chmod 600 /root/.ssh/*"
@@ -31,11 +38,18 @@ if [ "" != "$(echo $UNAME|grep Linux)" ]; then
 	echo "Cloning repository https://github.com/hellgate75/dataflow-flow-centric-poc.git ..."
 	git clone --depth=50 --branch=master https://github.com/hellgate75/dataflow-flow-centric-poc.git
     cd 	dataflow-flow-centric-poc
-	JAVA_PROJECT_FOLDER="$(pwd)"
+	export JAVA_PROJECT_FOLDER="$(pwd)"
 	echo "List of $(pwd) folder:"
 	ls -latr
-	TRAVIS_CI="yes"
+	export TRAVIS_CI="yes"
 else
+	echo ""
+	echo ""
+	echo "###########################################"
+	echo "#### L O C A L   E N V I R O N M E N T ####"
+	echo "###########################################"
+	echo ""
+	echo ""
 	cd $DATAFLOW_CENTRIC_PROJECT_CONTAINING_FOLDER/dataflow-flow-centric-poc
 	TRAVIS_CI="no"
 fi 
