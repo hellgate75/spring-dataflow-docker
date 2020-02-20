@@ -274,7 +274,7 @@ RES="0"
 echo "Creating Spring Cloud Dataflow Source Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
 cd $DATAFLOW_SOURCE_SERVER_FOLDER
 chmod 777 *.sh
-./create-dataflow-source-server-docker-image.sh
+sh ./create-dataflow-source-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
 if [ "true" = "$PUSH_DATAFLOW_SOURCE_SERVER" ]; then
@@ -305,7 +305,7 @@ RES="0"
 echo "Creating Spring Cloud Dataflow Processor Server for Flow Centric v. $PROCESS_SERVER_RELEASE docker image"
 cd $DATAFLOW_PROCESS_SERVER_FOLDER
 chmod 777 *.sh
-./create-dataflow-processor-server-docker-image.sh
+sh ./create-dataflow-processor-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
 if [ "true" = "$PUSH_DATAFLOW_PROCESS_SERVER" ]; then
@@ -338,7 +338,7 @@ RES="0"
 echo "Creating Spring Cloud Dataflow Sink Server for Flow Centric v. $SOURCE_SERVER_RELEASE docker image"
 cd $DATAFLOW_SINK_SERVER_FOLDER
 chmod 777 *.sh
-./create-dataflow-sink-server-docker-image.sh
+sh ./create-dataflow-sink-server-docker-image.sh
 RES="$?"
 echo "Results: $RES"
 if [ "true" = "$PUSH_DATAFLOW_SINK_SERVER" ]; then

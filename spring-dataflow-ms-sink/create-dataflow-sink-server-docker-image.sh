@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 if [ "" = "$SERVER_RELEASE" ]; then
 	SERVER_RELEASE="1.0.0-flow-centric"
 fi

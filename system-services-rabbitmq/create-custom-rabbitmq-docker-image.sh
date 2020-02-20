@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 if [ "" = "$RABBITMQ_RELEASE" ]; then
 	RABBITMQ_RELEASE=3.8-rc-management
 fi

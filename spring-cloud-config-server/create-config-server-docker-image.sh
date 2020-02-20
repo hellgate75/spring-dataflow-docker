@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 if [ "" = "$CONFIG_SERVER_RELEASE" ]; then
 	CONFIG_SERVER_RELEASE="1.0.0"
