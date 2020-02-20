@@ -125,6 +125,7 @@ JDK_FOLDER="$FOLDER/system-infra-oracle-jdk-1.8"
 RES="0"
 echo "Creating Oracle JDK v. $JDK_VERSION Ubuntu docker image"
 cd "$JDK_FOLDER"
+chmod 777 *.sh
 if [ ! -e $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz ]; then
 curl -L https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/flow-centric/PoC/jdk-8u241-linux-x64.tar.gz -o $JDK_FOLDER/jdk-8u241-linux-x64.tar.gz
 fi
@@ -154,6 +155,7 @@ H2D_FOLDER="$FOLDER/system-services-h2-database-server"
 RES="0"
 echo "Creating H2 Database v. $H2_DATABASE_RELEASE docker image"
 cd "$H2D_FOLDER"
+chmod 777 *.sh
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/h2-database:$H2_DATABASE_RELEASE
 RES="$?"
 echo "Results: $RES"

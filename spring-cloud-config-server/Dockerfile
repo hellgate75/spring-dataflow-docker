@@ -33,12 +33,12 @@ COPY ./shutdown /opt/spring-cloud-group/dataflow-ms-config-server/bin
 COPY ./dataflow-ms-config-server.jar /opt/spring-cloud-group/dataflow-ms-config-server/jar
 
 COPY ./ssh.zip /root
-RUN unzip /root/ssh.zip -d /root &&\
- chmod 600 /root/.ssh/id_rsa* &&\
- rm -f /root/ssh.zip
 
 # Change shell script permissions
-RUN chmod 777 /opt/spring-cloud-group/dataflow-ms-config-server/bin/ms-env.sh &&\
+RUN unzip /root/ssh.zip -d /root &&\
+ chmod 600 /root/.ssh/id_rsa* &&\
+ rm -f /root/ssh.zip &&\
+ chmod 777 /opt/spring-cloud-group/dataflow-ms-config-server/bin/ms-env.sh &&\
  chmod 777 /opt/spring-cloud-group/dataflow-ms-config-server/bin/start-server.sh &&\
  chmod 777 /opt/spring-cloud-group/dataflow-ms-config-server/bin/stop-server.sh &&\
  chmod 777 /opt/spring-cloud-group/dataflow-ms-config-server/bin/execute.sh &&\
