@@ -11,4 +11,4 @@ if [ ! -e ./dataflow-ms-config-server.jar ]; then
 	curl -sL https://ftorelli-software-compliance-repository.s3-eu-west-1.amazonaws.com/docker-machines/spring-dataflow/dataflow-ms-config-server.jar -o ./dataflow-ms-config-server.jar
 fi
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
-rm -f -o ./dataflow-ms-config-server.jar
+rm -f ./dataflow-ms-config-server.jar
