@@ -12,12 +12,21 @@ if [ "" = "$JAVA_PROJECT_FOLDER" ]; then
 	JAVA_PROJECT_FOLDER="../../.."
 fi
 
-if [ -e dataflow-ms-config-server.jar ]; then
-	rm -f dataflow-ms-config-server.jar
+if [ -e ./dataflow-ms-config-server.jar ]; then
+	rm -f ./dataflow-ms-config-server.jar
 fi
 
-cp $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target/dataflow-ms-flow-centric-config-server-*.jar dataflow-ms-config-server.jar 
+cp $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target/dataflow-ms-flow-centric-config-server-*.jar ./dataflow-ms-config-server.jar 
+
+if [ -e ./dataflow-ms-config-server.jar  ]; then
 
 docker --debug image build --rm . -t $DOCKER_IMAGE_USER/spring-cloud-config-server:$CONFIG_SERVER_RELEASE
 
-rm -f dataflow-ms-config-server.jar
+rm -f ./dataflow-ms-config-server.jar
+
+else
+	echo "Unable to copy file $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target/dataflow-ms-flow-centric-config-server-*.jar"
+	echo "From  folder $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target, listed as:"
+	echo "Files: $(ls $JAVA_PROJECT_FOLDER/dataflow-ms-flow-centric-config-server/target)"
+	exit 1
+fi
